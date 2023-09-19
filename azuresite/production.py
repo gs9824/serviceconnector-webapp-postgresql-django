@@ -23,74 +23,45 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-db_name = os.environ['AZURE_POSTGRESQL_NAME']
-db_host = os.environ['AZURE_POSTGRESQL_HOST']
-db_user = os.environ['AZURE_POSTGRESQL_USER']
-db_password = os.environ['AZURE_POSTGRESQL_PASSWORD']
+# db_name = os.environ['AZURE_POSTGRESQL_NAME']
+# db_host = os.environ['AZURE_POSTGRESQL_HOST']
+# db_user = os.environ['AZURE_POSTGRESQL_USER']
+# db_password = os.environ['AZURE_POSTGRESQL_PASSWORD']
 
 # Configure Postgres database, for connection string
-DATABASES = {                                                                    
-    'default': {                                                                 
-        'ENGINE': 'django.db.backends.postgresql',                               
-        'NAME': db_name,                                        
-        'HOST': db_host,                                            
-        'USER': db_user,                                            
-        'PASSWORD': db_password                                         
-    }                                                                            
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Configure Postgres database, for system-assigned msi
-# resource_uri = 'https://ossrdbms-aad.database.windows.net'
-# identity_endpoint = os.environ["IDENTITY_ENDPOINT"]
-# identity_header = os.environ["IDENTITY_HEADER"]
-# token_auth_uri = f"{identity_endpoint}?resource={resource_uri}&api-version=2019-08-01"
-# head_msi = {'X-IDENTITY-HEADER':identity_header}
-
-# resp = requests.get(token_auth_uri, headers=head_msi)
-# access_token = resp.json()['access_token']
-
 # DATABASES = {                                                                    
 #     'default': {                                                                 
 #         'ENGINE': 'django.db.backends.postgresql',                               
-#         'NAME': os.environ['ResourceConnector_DBforPostgreSQL_SubResourceName'],                                            
-#         'HOST': os.environ['ResourceConnector_DBforPostgreSQL_TargetServiceEndpoint'],                                            
-#         'USER': os.environ['ResourceConnector_DBforPostgreSQL_Identity'],                                            
-#         'PASSWORD': access_token,
-#         'OPTIONS': {
-#             'sslmode': 'require'
-#         }                                         
+#         'NAME': db_name,                                        
+#         'HOST': db_host,                                            
+#         'USER': db_user,                                            
+#         'PASSWORD': db_password                                         
 #     }                                                                            
 # }
+
+
+# Configure Postgres database, for system-assigned msi
+resource_uri = 'https://ossrdbms-aad.database.windows.net'
+identity_endpoint = os.environ["IDENTITY_ENDPOINT"]
+identity_header = os.environ["IDENTITY_HEADER"]
+token_auth_uri = f"{identity_endpoint}?resource={resource_uri}&api-version=2019-08-01"
+head_msi = {'X-IDENTITY-HEADER':identity_header}
+
+resp = requests.get(token_auth_uri, headers=head_msi)
+access_token = resp.json()['access_token']
+
+DATABASES = {                                                                    
+    'default': {                                                                 
+        'ENGINE': 'django.db.backends.postgresql',                               
+        'NAME': os.environ['ResourceConnector_DBforPostgreSQL_SubResourceName'],                                            
+        'HOST': os.environ['ResourceConnector_DBforPostgreSQL_TargetServiceEndpoint'],                                            
+        'USER': os.environ['ResourceConnector_DBforPostgreSQL_Identity'],                                            
+        'PASSWORD': access_token,
+        'OPTIONS': {
+            'sslmode': 'require'
+        }                                         
+    }                                                                            
+}
 
 # Configure Postgres database, for user-assigned msi
 # resource_uri = 'https://ossrdbms-aad.database.windows.net'
