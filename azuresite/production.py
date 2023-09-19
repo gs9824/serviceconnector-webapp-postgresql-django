@@ -53,9 +53,9 @@ access_token = resp.json()['access_token']
 DATABASES = {                                                                    
     'default': {                                                                 
         'ENGINE': 'django.db.backends.postgresql',                               
-        'NAME': os.environ['ResourceConnector_DBforPostgreSQL_SubResourceName'],                                            
-        'HOST': os.environ['ResourceConnector_DBforPostgreSQL_TargetServiceEndpoint'],                                            
-        'USER': os.environ['ResourceConnector_DBforPostgreSQL_Identity'],                                            
+        'NAME': os.environ['AZURE_POSTGRESQL_POSTGRESQL_547B7_NAME'],                                            
+        'HOST': os.environ['AZURE_POSTGRESQL_POSTGRESQL_547B7_HOST'],                                            
+        'USER': os.environ['AZURE_POSTGRESQL_POSTGRESQL_547B7_USER'],                                            
         'PASSWORD': access_token,
         'OPTIONS': {
             'sslmode': 'require'
