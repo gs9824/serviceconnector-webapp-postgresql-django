@@ -41,7 +41,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Configure Postgres database, for system-assigned msi
-resource_uri = 'https://ossrdbms-aad.database.windows.net'
+resource_uri = 'https://ossrdbms-aad.database.windows.net' 
 identity_endpoint = os.environ["IDENTITY_ENDPOINT"]
 identity_header = os.environ["IDENTITY_HEADER"]
 token_auth_uri = f"{identity_endpoint}?resource={resource_uri}&api-version=2019-08-01"
